@@ -1,2 +1,7 @@
-# gnome-shell-extension-extensions
-gnome shell extension to enable/disable extension easily via a panel menu
+# Extensions
+## About
+Extensions is a [Gnome](https://www.gnome.org/) Shell Extension which allows to enable and disable extensions via a menu in the status area in the main menu panel. 
+
+## Install
+TODO
+
