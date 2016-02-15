@@ -2,9 +2,9 @@
 	"uuid": "extensions@abteil.org",
 	"name": "Extensions",
 	"url": "https://github.com/petres/gnome-shell-extension-extensions",
-	"description": "Enable/disable gnome shell extensions easily from a menu in the top panel",
+	"description": "Enable/disable easily gnome shell extensions from a menu in the top panel. Also allows to edit the settings of the extensions. Feedback welcome!",
 	"shell-version": [
 		"3.18"
 	],
-    "version": 1
+    "version": 2
 }
