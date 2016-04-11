@@ -42,15 +42,18 @@ const PopupExtensionItem = new Lang.Class({
         hbox.add_child(statusBin);
 
         this._switch = new PopupMenu.Switch(this._extension.state == ExtensionSystem.ExtensionState.ENABLED);
+
+        if(ExtensionUtils.isOutOfDate(this._extension))
+            this.setSensitive(false)
+        
         statusBin.child = this._switch.actor;
 
         this.actor.add(hbox, { x_align: St.Align.END });
     },
 
     activate: function(event) {
-        if (this._switch.actor.mapped) {
+        if (this._switch.actor.mapped)
             this.toggle();
-        }
 
         if (event.type() == Clutter.EventType.KEY_PRESS &&
             event.get_key_symbol() == Clutter.KEY_space)

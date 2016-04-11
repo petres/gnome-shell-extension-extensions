@@ -39,15 +39,17 @@ const ExtensionsManager = new Lang.Class({
 
         this.menu.bottomSection.add((new PopupMenu.PopupSeparatorMenuItem()).actor);
         
-        let item = new PopupMenu.PopupMenuItem(_("Add gnome shell extensions ..."));
+        let itemAdd = new PopupMenu.PopupMenuItem(_("Add gnome shell extensions ..."));
+        //let itemConfig = new PopupMenu.PopupMenuItem(_("Config ..."));
 
-        item.connect('activate', Lang.bind(this, function(object, event) {
+        itemAdd.connect('activate', Lang.bind(this, function(object, event) {
             this.menu.close()
             Gio.AppInfo.launch_default_for_uri("https://extensions.gnome.org",
                 global.create_app_launch_context(event.get_time(), 0));
         }));
 
-        this.menu.bottomSection.add(item.actor);
+        //this.menu.bottomSection.add(itemConfig.actor);
+        this.menu.bottomSection.add(itemAdd.actor);
 
         this._refresh();
 
