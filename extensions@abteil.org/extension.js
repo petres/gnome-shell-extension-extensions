@@ -56,7 +56,15 @@ const ExtensionsManager = new Lang.Class({
     },
     _refresh: function() {
         this.menu.removeAll();
-        let uuids = Object.keys(ExtensionUtils.extensions)
+        let uuids = Object.keys(ExtensionUtils.extensions);
+
+        uuids.sort(function(a, b) {
+            a = ExtensionUtils.extensions[a].metadata.name;
+            b = ExtensionUtils.extensions[b].metadata.name;
+
+            return a < b ? -1 : (a > b ? 1 : 0);
+        });
+
         uuids.forEach(Lang.bind(this, function(uuid) {
             let item = new PopupExtensionItem(uuid);
             this.menu.addMenuItem(item);
