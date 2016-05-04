@@ -29,7 +29,7 @@ const PopupExtensionItem = new Lang.Class({
                               style_class: 'popup-menu-icon popup-menu-icon-extensions-settings '});
 
             let settingsButton = new St.Button({ child: settingsIcon});
-            settingsButton.add_style_class_name('abc');
+            //settingsButton.add_style_class_name('abc');
 
             settingsButton.connect('clicked', Lang.bind(this, function() {
                 Util.spawn(["gnome-shell-extension-prefs", uuid]);

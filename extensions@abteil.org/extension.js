@@ -17,7 +17,7 @@ const ExtensionsManager = new Lang.Class({
     Name: 'ExtensionsManager',
     Extends: PanelMenu.Button,
 
-    _init: function(logger) {
+    _init: function() {
         PanelMenu.Button.prototype._init.call(this, St.Align.START, 'extensionsManager', true);
 
         this.popupMenu = new ScrollablePopupMenu(this.actor, St.Align.START, St.Side.TOP);

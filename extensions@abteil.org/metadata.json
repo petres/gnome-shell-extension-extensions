@@ -5,6 +5,5 @@
 	"description": "Enable/disable easily gnome shell extensions from a menu in the top panel. Also allows to edit the settings of the extensions. Feedback welcome!",
 	"shell-version": [
 		"3.18", "3.20"
-	],
-    "version": 2
+	]
 }
