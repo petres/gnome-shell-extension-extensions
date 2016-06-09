@@ -59,8 +59,8 @@ const ExtensionsManager = new Lang.Class({
         let uuids = Object.keys(ExtensionUtils.extensions);
 
         uuids.sort(function(a, b) {
-            a = ExtensionUtils.extensions[a].metadata.name;
-            b = ExtensionUtils.extensions[b].metadata.name;
+            a = ExtensionUtils.extensions[a].metadata.name.toLowerCase();
+            b = ExtensionUtils.extensions[b].metadata.name.toLowerCase();
 
             return a < b ? -1 : (a > b ? 1 : 0);
         });
