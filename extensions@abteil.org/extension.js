@@ -13,6 +13,10 @@ const Me = ExtensionUtils.getCurrentExtension();
 const ScrollablePopupMenu = Me.imports.scrollablePopupMenu.ScrollablePopupMenu;
 const PopupExtensionItem = Me.imports.popupExtensionItem.PopupExtensionItem;
 
+const Convenience = Me.imports.convenience;
+const Gettext = imports.gettext.domain('extensions');
+const _ = Gettext.gettext;
+
 const ExtensionsManager = new Lang.Class({
     Name: 'ExtensionsManager',
     Extends: PanelMenu.Button,
@@ -74,6 +78,10 @@ const ExtensionsManager = new Lang.Class({
 });
 
 let extensionsManager;
+
+function init() {
+    Convenience.initTranslations("extensions");
+}
 
 function enable() {
     extensionsManager = new ExtensionsManager();
