@@ -24,6 +24,9 @@ const ExtensionsManager = new Lang.Class({
     _init: function() {
         PanelMenu.Button.prototype._init.call(this, St.Align.START, 'extensionsManager', true);
 
+        this._settings = Convenience.getSettings();
+        this._settings.connect('changed', Lang.bind(this, this._refresh));
+
         this.popupMenu = new ScrollablePopupMenu(this.actor, St.Align.START, St.Side.TOP);
 
         this.setMenu(this.popupMenu);
@@ -40,20 +43,6 @@ const ExtensionsManager = new Lang.Class({
         }));
         
         Main.panel.addToStatusArea('extensions', this);
-
-        this.menu.bottomSection.add((new PopupMenu.PopupSeparatorMenuItem()).actor);
-        
-        let itemAdd = new PopupMenu.PopupMenuItem(_("Add gnome shell extensions ..."));
-        //let itemConfig = new PopupMenu.PopupMenuItem(_("Config ..."));
-
-        itemAdd.connect('activate', Lang.bind(this, function(object, event) {
-            this.menu.close()
-            Gio.AppInfo.launch_default_for_uri("https://extensions.gnome.org",
-                global.create_app_launch_context(event.get_time(), 0));
-        }));
-
-        //this.menu.bottomSection.add(itemConfig.actor);
-        this.menu.bottomSection.add(itemAdd.actor);
 
         this._refresh();
 
@@ -73,6 +62,23 @@ const ExtensionsManager = new Lang.Class({
             let item = new PopupExtensionItem(uuid);
             this.menu.addMenuItem(item);
         }));
+
+        this.menu.bottomSection.remove_all_children();
+
+        if (this._settings.get_boolean('show-add')) {
+            this.menu.bottomSection.add((new PopupMenu.PopupSeparatorMenuItem()).actor);
+
+            let itemAdd = new PopupMenu.PopupMenuItem(_("Add gnome shell extensions ..."));
+
+            itemAdd.connect('activate', Lang.bind(this, function(object, event) {
+                this.menu.close()
+                Gio.AppInfo.launch_default_for_uri("https://extensions.gnome.org",
+                    global.create_app_launch_context(event.get_time(), 0));
+            }));
+
+            this.menu.bottomSection.add(itemAdd.actor);
+        }
+
         return true;
     }
 });

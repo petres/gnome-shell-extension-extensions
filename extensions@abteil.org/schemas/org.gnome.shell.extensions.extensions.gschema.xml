@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gnome-shell-extensions-extensions">
+    <enum id='org.gnome.shell.extensions.extensions.positions'>
+        <value value='0' nick='panel'/>
+        <value value='1' nick='menu'/>
+    </enum>
+    <schema path="/org/gnome/shell/extensions/extensions/" id="org.gnome.shell.extensions.extensions">
+        <key type="b" name="show-add">
+            <default>true</default>
+            <summary>Show the add extensions button</summary>
+            <description>Whether to show the add extensions button as last entry in the  extensions list.</description>
+        </key>
+        <key name="position" enum="org.gnome.shell.extensions.extensions.positions">
+            <default>'panel'</default>
+            <summary>Where to display the extension indicator</summary>
+        </key>
+    </schema>
+</schemalist>
