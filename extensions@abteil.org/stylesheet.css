@@ -1,3 +1,8 @@
 .popup-menu-icon-extensions-settings {
     padding: 0px 8px;
 }
+
+.system-extensions-submenu-icon {
+	icon-size: 16px;
+	padding: 0 4px;
+}

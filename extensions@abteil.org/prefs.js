@@ -38,6 +38,7 @@ const ExtensionsSettings = new GObject.Class({
         // Gtk Grid init
         this.parent(params);
         this.set_orientation(Gtk.Orientation.VERTICAL);
+        this.set_row_spacing(10);
         this.margin = 20;
 
 
@@ -75,8 +76,8 @@ const ExtensionsSettings = new GObject.Class({
                 this._settings.set_enum('position', this._positionCombo.get_model().get_value(iter, 0));
         }));
 
-        // this.attach(positionLabel, 1, 1, 1, 1);
-        // this.attach_next_to(this._positionCombo, positionLabel, 1, 1, 1);
+        this.attach(positionLabel, 1, 1, 1, 1);
+        this.attach_next_to(this._positionCombo, positionLabel, 1, 1, 1);
 
 
 
