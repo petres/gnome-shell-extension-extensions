@@ -18,8 +18,6 @@ const Gettext = imports.gettext.domain('extensions');
 const _ = Gettext.gettext;
 
 
-
-
 const ExtensionsManager = new Lang.Class({
     Name: 'ExtensionsManager',
     
@@ -27,11 +25,8 @@ const ExtensionsManager = new Lang.Class({
     _init: function() {
         this._settings = Convenience.getSettings();
         this._settings.connect('changed', Lang.bind(this, this._refresh));
-
         this._createContainer()
     },
-
-
     _createContainer: function() {
         this.containerType = this._settings.get_enum('position');
 
@@ -69,7 +64,6 @@ const ExtensionsManager = new Lang.Class({
 
         this._refresh();
     },
-
     _refresh: function() {
         if (this.containerType != this._settings.get_enum('position')) {
             this.container.destroy();
@@ -110,6 +104,9 @@ const ExtensionsManager = new Lang.Class({
         }
 
         return true;
+    },
+    destroy: function() {
+        this.container.destroy();
     }
 });
 
