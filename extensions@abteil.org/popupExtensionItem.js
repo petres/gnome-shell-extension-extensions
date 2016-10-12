@@ -29,7 +29,6 @@ const PopupExtensionItem = new Lang.Class({
                               style_class: 'popup-menu-icon popup-menu-icon-extensions-settings '});
 
             let settingsButton = new St.Button({ child: settingsIcon});
-            //settingsButton.add_style_class_name('abc');
 
             settingsButton.connect('clicked', Lang.bind(this, function() {
                 Util.spawn(["gnome-shell-extension-prefs", uuid]);
@@ -43,8 +42,8 @@ const PopupExtensionItem = new Lang.Class({
 
         this._switch = new PopupMenu.Switch(this._extension.state == ExtensionSystem.ExtensionState.ENABLED);
 
-        if(ExtensionUtils.isOutOfDate(this._extension))
-            this.setSensitive(false)
+        //if(ExtensionUtils.isOutOfDate(this._extension))
+        //    this.setSensitive(false)
         
         statusBin.child = this._switch.actor;
 

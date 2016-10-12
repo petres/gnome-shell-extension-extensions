@@ -20,7 +20,7 @@ const _ = Gettext.gettext;
 
 const ExtensionsManager = new Lang.Class({
     Name: 'ExtensionsManager',
-    
+
     containerType: -1,
     _init: function() {
         this._settings = Convenience.getSettings();
@@ -33,7 +33,7 @@ const ExtensionsManager = new Lang.Class({
         if (this.containerType == 0) {
             this.container = new PanelMenu.Button()
             PanelMenu.Button.prototype._init.call(this.container, St.Align.START, 'extensionsManager', true);
-            
+
             this.menu = new ScrollablePopupMenu(this.container.actor, St.Align.START, St.Side.TOP);
             this.container.setMenu(this.menu);
 
@@ -47,7 +47,7 @@ const ExtensionsManager = new Lang.Class({
             this.container.actor.connect('button-press-event', Lang.bind(this, function() {
                 this._refresh();
             }));
-            
+
             Main.panel.addToStatusArea('extensions', this.container);
         } else {
             this.container = new PopupMenu.PopupSubMenuMenuItem("Extensions", true);
