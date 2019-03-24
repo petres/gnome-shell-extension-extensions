@@ -31,11 +31,11 @@ const ExtensionsManager = new Lang.Class({
         this.containerType = this._settings.get_enum('position');
 
         if (this.containerType == 0) {
-            this.container = new PanelMenu.Button()
-            PanelMenu.Button.prototype._init.call(this.container, St.Align.START, 'extensionsManager', true);
+            this.container = new PanelMenu.Button(St.Align.START, 'extensionsManager');
+            //this.container = new PanelMenu.Button(St.Align.START, 'extensionsManager', true);
+            //this.menu = new PopupMenu.PopupMenu(this.container.actor, St.Align.START, St.Side.TOP);
+            //this.container.setMenu(this.menu);
 
-            this.menu = new ScrollablePopupMenu(this.container.actor, St.Align.START, St.Side.TOP);
-            this.container.setMenu(this.menu);
 
             let hbox = new St.BoxLayout({style_class: 'panel-status-menu-box' });
             let icon = new St.Icon({icon_name: 'goa-panel-symbolic', style_class: 'system-status-icon'});
@@ -58,6 +58,8 @@ const ExtensionsManager = new Lang.Class({
             Main.panel.statusArea.aggregateMenu.menu.addMenuItem(this.container, 8);
         }
 
+        this.menu = this.container.menu
+
         this.container.actor.connect('button-press-event', Lang.bind(this, function() {
             this._refresh();
         }));
@@ -72,7 +74,6 @@ const ExtensionsManager = new Lang.Class({
 
         this.menu.removeAll();
         let uuids = Object.keys(ExtensionUtils.extensions);
-
         uuids.sort(function(a, b) {
             a = ExtensionUtils.extensions[a].metadata.name.toLowerCase();
             b = ExtensionUtils.extensions[b].metadata.name.toLowerCase();

@@ -4,12 +4,10 @@ const Lang = imports.lang;
 const PopupMenu = imports.ui.popupMenu;
 const St = imports.gi.St;
 
-const ScrollablePopupMenu = new Lang.Class({
-    Name: 'ScrollablePopupMenu',
-    Extends: PopupMenu.PopupMenu,
 
-    _init: function(sourceActor, arrowAlignment, arrowSide) {
-        PopupMenu.PopupMenuBase.prototype._init.call(this, sourceActor, 'popup-menu-content');
+class ScrollablePopupMenu extends PopupMenu.PopupMenu {
+    constructor(sourceActor, arrowAlignment, arrowSide) {
+        super(sourceActor, 'popup-menu-content');
         this._arrowAlignment = arrowAlignment;
         this._arrowSide = arrowSide;
 
@@ -50,4 +48,4 @@ const ScrollablePopupMenu = new Lang.Class({
 
         this.box.set_style('padding-bottom: 0');
     }
-});
+}

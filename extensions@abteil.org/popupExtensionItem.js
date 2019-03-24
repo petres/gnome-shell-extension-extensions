@@ -8,17 +8,13 @@ const Gtk = imports.gi.Gtk;
 const ExtensionSystem = imports.ui.extensionSystem;
 const ExtensionUtils = imports.misc.extensionUtils;
 
-const PopupExtensionItem = new Lang.Class({
-    Name: 'PopupExtensionItem',
-    Extends: PopupMenu.PopupBaseMenuItem,
-
-    _init: function(uuid, params) {
-        this.parent(params);
-
-        this._extension = ExtensionUtils.extensions[uuid]
+class PopupExtensionItem extends PopupMenu.PopupBaseMenuItem {
+    constructor(uuid, params) {
+        super(params);
+        this._extension = ExtensionUtils.extensions[uuid];
 
         this.label = new St.Label({ text: this._extension.metadata.name });
-            
+
         this.actor.label_actor = this.label;
         this.actor.add(this.label, { expand: true });
 
@@ -44,13 +40,13 @@ const PopupExtensionItem = new Lang.Class({
 
         //if(ExtensionUtils.isOutOfDate(this._extension))
         //    this.setSensitive(false)
-        
+
         statusBin.child = this._switch.actor;
 
         this.actor.add(hbox, { x_align: St.Align.END });
-    },
+    }
 
-    activate: function(event) {
+    activate(event) {
         if (this._switch.actor.mapped)
             this.toggle();
 
@@ -59,9 +55,9 @@ const PopupExtensionItem = new Lang.Class({
             return;
 
         this.parent(event);
-    },
+    }
 
-    toggle: function() {
+    toggle() {
         this._switch.toggle();
 
         if(this._extension.state == ExtensionSystem.ExtensionState.ENABLED)
@@ -69,4 +65,4 @@ const PopupExtensionItem = new Lang.Class({
         else
             ExtensionSystem.enableExtension(this._extension.uuid)
     }
-});
+}
