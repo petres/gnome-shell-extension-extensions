@@ -1,55 +1,57 @@
 const GLib = imports.gi.GLib;
-const Gio = imports.gi.Gio;
-const Gtk = imports.gi.Gtk;
-const GObject = imports.gi.GObject;
+
+const { Gio, GObject, Gtk } = imports.gi;
+
 const Lang = imports.lang;
 
 const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Convenience = Me.imports.convenience;
 
-const Gettext = imports.gettext.domain('extensions');
+const Gettext = imports.gettext;
 const _ = Gettext.gettext;
+const N_ = e => e;
 
-const ExtensionsSettings = new GObject.Class({
-    Name: 'Extensions-Settings',
-    Extends: Gtk.Grid,
+const ExtensionsSettings = GObject.registerClass(
+class ExtensionsSettings extends Gtk.Grid {
 
-    _settingsInfo: {
-        'position': {
-                'label': _('Position'),
-                'items': [
-                    { 
-                        id: 0, 
-                        name: _("Panel") 
-                    },
-                    {   
-                        id: 1, 
-                        name: _("Menu") 
-                    }
-                ]
-            },
-        'show-add': {
-                'label': _("Show 'Add ...'")
-            }
-    },
+    _loadSettings() {
+        this._positionCombo.set_active(this._settings.get_enum('position'))
+        this._showAddCheckbox.set_active(this._settings.get_boolean('show-add'))
+    }
 
-    _init: function(params) {
+    _init(params) {
+        super._init(params);
+
+        let _settingsInfo = {
+            'position': {
+                    'label': _('Position'),
+                    'items': [
+                        {
+                            id: 0,
+                            name: _("Panel")
+                        },
+                        {
+                            id: 1,
+                            name: _("Menu")
+                        }
+                    ]
+                },
+            'show-add': {
+                    'label': _("Show 'Add ...'")
+                }
+        };
+
         // Gtk Grid init
-        this.parent(params);
         this.set_orientation(Gtk.Orientation.VERTICAL);
         this.set_row_spacing(10);
         this.margin = 20;
 
-
         // Open settings
-        this._settings = Convenience.getSettings();
+        this._settings = ExtensionUtils.getSettings();
         this._settings.connect('changed', Lang.bind(this, this._loadSettings));
-
 
         // Position
         let positionLabel = new Gtk.Label({
-                label:      this._settingsInfo['position']['label'] + ": ",
+                label:      _settingsInfo['position']['label'] + ": ",
                 xalign:     0,
                 hexpand:    true
             });
@@ -59,13 +61,13 @@ const ExtensionsSettings = new GObject.Class({
 
         this._positionCombo = new Gtk.ComboBox({model: model});
         this._positionCombo.get_style_context().add_class(Gtk.STYLE_CLASS_RAISED);
-        
+
         let renderer = new Gtk.CellRendererText();
         this._positionCombo.pack_start(renderer, true);
         this._positionCombo.add_attribute(renderer, 'text', 1);
 
-        for (let i = 0; i < this._settingsInfo['position']['items'].length; i++) {
-            let item = this._settingsInfo['position']['items'][i];
+        for (let i = 0; i < _settingsInfo['position']['items'].length; i++) {
+            let item = _settingsInfo['position']['items'][i];
             let iter = model.append();
             model.set(iter, [0, 1], [item.id, item.name]);
         }
@@ -79,16 +81,14 @@ const ExtensionsSettings = new GObject.Class({
         this.attach(positionLabel, 1, 1, 1, 1);
         this.attach_next_to(this._positionCombo, positionLabel, 1, 1, 1);
 
-
-
         // Show Add
         let showAddLabel = new Gtk.Label({
-                label:      this._settingsInfo['show-add']['label'] + ": ",
+                label:      _settingsInfo['show-add']['label'] + ": ",
                 xalign:     0,
                 hexpand:    true
             });
 
-        this._showAddCheckbox = new Gtk.Switch();
+        this._showAddCheckbox = new Gtk.Switch({ valign: Gtk.Align.CENTER, halign: Gtk.Align.CENTER });
         this._showAddCheckbox.connect('notify::active',  Lang.bind(this, function(button) {
             this._settings.set_boolean('show-add', button.active);
         }));
@@ -98,50 +98,11 @@ const ExtensionsSettings = new GObject.Class({
 
         this._loadSettings();
 
-    },
-    // _saveSettings: function() {
-    //     let [success, iter] = this._positionCombo.get_active_iter()
-    //     if (success)
-    //         this._settings.set_enum('position', this._positionCombo.get_model().get_value(iter, 0));
-    // },
-    _loadSettings: function() {
-        this._positionCombo.set_active(this._settings.get_enum('position'))
-        this._showAddCheckbox.set_active(this._settings.get_boolean('show-add'))
-    },
-    _refresh: function() {
-        // if (!this._changedPermitted)
-        //     return;
-
-        // this._store.clear();
-
-        // let currentItems = this._settings.get_strv("systemd");
-        // let validItems = [ ];
-
-        // for (let i = 0; i < currentItems.length; i++) {
-        //     let entry = JSON.parse(currentItems[i]);
-        //     // REMOVE NOT EXISTING ENTRIES
-        //     if (this._availableSystemdServices["all"].indexOf(entry["service"]) < 0)
-        //         continue;
-
-        //     // COMPABILITY
-        //     if(!("type" in entry))
-        //         entry["type"] = this._getTypeOfService(entry["service"])
-
-        //     validItems.push(JSON.stringify(entry));
-
-        //     let iter = this._store.append();
-        //     this._store.set(iter,
-        //                     [0, 1, 2],
-        //                     [entry["name"], entry["service"], entry["type"]]);
-        // }
-
-        // this._changedPermitted = false
-        // this._settings.set_strv("systemd", validItems);
-        // this._changedPermitted = true
     }
 });
 
 function init() {
+    ExtensionUtils.initTranslations('gnome-shell-extensions-extensions');
 }
 
 function buildPrefsWidget() {

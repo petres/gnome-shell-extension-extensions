@@ -1,10 +1,10 @@
 {
-	"uuid": "extensions@abteil.org",
-	"name": "Extensions",
-	"url": "https://github.com/petres/gnome-shell-extension-extensions",
-	"description": "Enable/disable easily gnome shell extensions from a menu in the top panel. Also allows to edit the settings of the extensions. Feedback welcome!",
-	"settings-schema": "org.gnome.shell.extensions.extensions",
-	"shell-version": [
-		"3.32"
-	]
+  "description": "Enable/disable easily gnome shell extensions from a menu in the top panel. Also allows to edit the settings of the extensions. Feedback welcome!",
+  "name": "Extensions",
+  "settings-schema": "org.gnome.shell.extensions.extensions",
+  "shell-version": [
+    "3.34"
+  ],
+  "url": "https://github.com/petres/gnome-shell-extension-extensions",
+  "uuid": "extensions@abteil.org"
 }
