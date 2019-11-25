@@ -5,10 +5,12 @@ const St = imports.gi.St;
 const Clutter = imports.gi.Clutter;
 const Util = imports.misc.util;
 const ExtensionUtils = imports.misc.extensionUtils;
+const GObject = imports.gi.GObject;
 
+var PopupExtensionItem  = GObject.registerClass(
 class PopupExtensionItem extends PopupMenu.PopupBaseMenuItem {
-    constructor(uuid, params) {
-        super(params);
+    _init(uuid, params) {
+        super._init(params)
 
         this._extension = Main.extensionManager.lookup(uuid)
 
@@ -47,11 +49,11 @@ class PopupExtensionItem extends PopupMenu.PopupBaseMenuItem {
                     Main.extensionManager.enableExtension(this._extension.uuid)
             }
 
-            if (event.type() == Clutter.EventType.KEY_PRESS &&
-                event.get_key_symbol() == Clutter.KEY_space)
-                return;
+            // if (event.type() == Clutter.EventType.KEY_PRESS &&
+            //     event.get_key_symbol() == Clutter.KEY_space)
+            //     return;
 
-            this.parent(event);
+            // this.parent(event);
         }));
     }
-}
+});
