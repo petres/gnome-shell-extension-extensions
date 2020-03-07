@@ -16,9 +16,8 @@ const Me = ExtensionUtils.getCurrentExtension();
 var PopupExtensionItem = Me.imports.popupExtensionItem.PopupExtensionItem;
 
 
-var ExtensionsManager = new Lang.Class({
+const ExtensionsManager = new Lang.Class({
     Name: 'ExtensionsManager',
-
     containerType: -1,
 
     _init: function() {
@@ -85,23 +84,35 @@ var ExtensionsManager = new Lang.Class({
             this.menu.addMenuItem(new PopupExtensionItem(uuid));
         }));
 
-        if (this.menu.bottomSection) {
-            this.menu.bottomSection.remove_all_children();
+        if(this.containerType == 0 && this._settings.get_boolean('show-add')) {
+            this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
-            if (this._settings.get_boolean('show-add')) {
-                this.menu.bottomSection.add(new PopupMenu.PopupSeparatorMenuItem());
-
-                let itemAdd = new PopupMenu.PopupMenuItem(_("Add gnome shell extensions ..."));
-
-                itemAdd.connect('activate', Lang.bind(this, function(object, event) {
-                    this.menu.close()
-                    Gio.AppInfo.launch_default_for_uri("https://extensions.gnome.org",
-                        global.create_app_launch_context(event.get_time(), 0));
-                }));
-
-                this.menu.bottomSection.add(itemAdd);
-            }
+            let item = new PopupMenu.PopupMenuItem(_("Add gnome shell extensions ..."));
+            item.connect('activate', Lang.bind(this, function(object, event) {
+                this.menu.close()
+                Gio.AppInfo.launch_default_for_uri("https://extensions.gnome.org",
+                    global.create_app_launch_context(event.get_time(), 0));
+            }));
+            this.container.menu.addMenuItem(item);
         }
+
+        // if (this.menu.bottomSection) {
+        //     this.menu.bottomSection.remove_all_children();
+        //
+        //     if (this._settings.get_boolean('show-add')) {
+        //         this.menu.bottomSection.add(new PopupMenu.PopupSeparatorMenuItem());
+        //
+        //         let itemAdd = new PopupMenu.PopupMenuItem(_("Add gnome shell extensions ..."));
+        //
+        //         itemAdd.connect('activate', Lang.bind(this, function(object, event) {
+        //             this.menu.close()
+        //             Gio.AppInfo.launch_default_for_uri("https://extensions.gnome.org",
+        //                 global.create_app_launch_context(event.get_time(), 0));
+        //         }));
+        //
+        //         this.menu.bottomSection.add(itemAdd);
+        //     }
+        // }
 
         return true;
     },
@@ -111,16 +122,16 @@ var ExtensionsManager = new Lang.Class({
     }
 });
 
-var _extensionIndicator;
+let extensionIndicator;
 
 function init() {
     ExtensionUtils.initTranslations('gnome-shell-extensions-extensions');
 }
 
 function enable() {
-    _extensionIndicator = new ExtensionsManager();
+    extensionIndicator = new ExtensionsManager();
 }
 
 function disable() {
-    _extensionIndicator.destroy();
+    extensionIndicator.destroy();
 }
