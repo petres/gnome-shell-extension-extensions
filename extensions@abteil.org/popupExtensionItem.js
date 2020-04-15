@@ -28,7 +28,7 @@ class PopupExtensionItem extends PopupMenu.PopupBaseMenuItem {
 
             let settingsButton = new St.Button({ child: settingsIcon });
             settingsButton.connect('clicked', Lang.bind(this, function() {
-                Util.spawn(["gnome-shell-extension-prefs", uuid]);
+                Util.spawn(["gnome-extensions", "prefs", uuid]);
                 this._getTopMenu().close()
             }));
             hbox.add_child(settingsButton);
