@@ -3,7 +3,7 @@
   "name": "Extensions",
   "settings-schema": "org.gnome.shell.extensions.extensions",
   "shell-version": [
-    "3.34"
+    "3.34", "3.36", "3.38", "40", 
   ],
   "url": "https://github.com/petres/gnome-shell-extension-extensions",
   "uuid": "extensions@abteil.org"
